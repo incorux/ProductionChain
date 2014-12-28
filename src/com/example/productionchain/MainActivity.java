@@ -26,6 +26,12 @@ public class MainActivity extends Activity {
 		
 		if(products == null)
 			products = new ArrayList<Product>();
+		
+		products.add(new Product("First",0.0,new Resource[]{}));
+		products.add(new Product("Second",0.0,new Resource[]{}));
+		products.get(0).AddMaterial(products.get(1));
+		products.get(1).AddMaterial(products.get(0));
+		
 
 		SetEvents();
 	} 
@@ -37,13 +43,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getApplicationContext(), AddproductActivity.class);
-				Resource[]res = new Resource[products.size()];
-				int j = 0;
-				for(Product p : products){
-					res[j] = new Resource(p);
-					j++;
-				}
-				i.putExtra("Resources", res);
+				ArrayList<Resource> res = new ArrayList<>();
+				for(Product pr : products)
+					res.add(new Resource(pr));
+				Product p = new Product("Enter a name",0, res.toArray(new Resource[]{}));
+				i.putExtra("NewProduct", p);
 				startActivityForResult(i, 0);
 			}
 		});
@@ -68,6 +72,9 @@ public class MainActivity extends Activity {
 			if (extras != null) {
 			    Product product = extras.getParcelable("NewProduct");
 			    products.add(product);
+			    for(Product p : products){
+			    	p.AddMaterial(product);
+			    }
 			}
 	      }
 	      break;

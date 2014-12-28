@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 public class AddproductActivity extends ListActivity {
 	
-	private Resource[] resources;
+	Product product = null;
 	
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
@@ -23,17 +23,16 @@ public class AddproductActivity extends ListActivity {
     
     Intent i = getIntent();
 	if (i!= null) {
-		Parcelable[] ar = i.getParcelableArrayExtra("Resources"); 
-	    resources = new Resource[ar.length];
-	    System.arraycopy(ar, 0, resources, 0, ar.length);
-		String[] arr = new String[resources.length];
+		Product p = i.getParcelableExtra("NewProduct");
+		this.product = p;
+		String[] arr = new String[p.materials.size()];
 		int it = 0;
-		for(Resource p : resources)
+		for(Resource r : p.materials)
 		{
-			arr[it] = p.label;
+			arr[it] = r.label;
 			it++;
 		}
-	    MyArrayAdapter adapter = new MyArrayAdapter(this, resources,arr);
+	    MyArrayAdapter adapter = new MyArrayAdapter(this, p.materials.toArray(new Resource[]{}),arr);
 	    setListAdapter(adapter);
 	}
   }
@@ -56,8 +55,9 @@ public class AddproductActivity extends ListActivity {
 				  String Name = namefield.getText().toString();
 				  Double Value= Double.parseDouble(valuefield.getText().toString());
 				  
-				  Product p = new Product(Name,Value, new Resource[]{});
-				  resultIntent.putExtra("NewProduct", p);
+				  product.Name = Name;
+				  product.Value = Value;
+				  resultIntent.putExtra("NewProduct", product);
 				  setResult(Activity.RESULT_OK, resultIntent);
 				  finish();
 			}

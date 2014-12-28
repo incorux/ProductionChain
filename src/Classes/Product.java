@@ -35,6 +35,11 @@ public class Product implements Parcelable{
 		materials = new ArrayList<Resource>();
 		in.readList(materials, Resource.class.getClassLoader());
 	}
+	
+	public void AddMaterial(Product p){
+		materials.add(new Resource(p));
+	}
+	
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub

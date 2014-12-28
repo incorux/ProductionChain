@@ -32,8 +32,11 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     ImageView upView = (ImageView) rowView.findViewById(R.id.up);
     ImageView downView = (ImageView) rowView.findViewById(R.id.down);
     
+    upView.setOnClickListener(new CustomListener(position,this,values,false));
+    downView.setOnClickListener(new CustomListener(position,this,values,true));
+    
     textView.setText(values[position].label);
-    valueView.setText("0");
+    valueView.setText(Integer.toString(values[position].quantity));
     return rowView;
   }
 } 

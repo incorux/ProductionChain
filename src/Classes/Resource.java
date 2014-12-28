@@ -30,7 +30,7 @@ public class Resource implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(Id);
 		dest.writeString(label);
-		dest.writeDouble(quantity);
+		dest.writeInt(quantity);
 	}
 	
 	public static final Parcelable.Creator<Resource> CREATOR= new Parcelable.Creator<Resource>() {
