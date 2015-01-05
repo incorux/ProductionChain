@@ -26,6 +26,18 @@
             android:name=".AddproductActivity"
             android:label="@string/title_activity_addproduct" >
         </activity>
+        <activity
+            android:name=".ProductlistActivity"
+            android:label="@string/title_activity_productlist" >
+        </activity>
+        <activity
+            android:name=".ProductionChainActivity"
+            android:label="@string/title_activity_production_chain" >
+        </activity>
+        <activity
+            android:name=".ChainSettingsActivity"
+            android:label="@string/title_activity_chain_settings" >
+        </activity>
     </application>
 
 </manifest>

@@ -4,13 +4,13 @@ import android.content.res.Resources;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class CustomListener implements OnClickListener
+public class EditListener implements OnClickListener
 {
 	boolean upOrDown;
 	int position;
-	MyArrayAdapter adapter;
+	MaterialsListAdapter adapter;
 	Resource[] resources;
-	public CustomListener(int aVariable, MyArrayAdapter myArrayAdapter,Resource[] res, boolean UpOrDown) {
+	public EditListener(int aVariable, MaterialsListAdapter myArrayAdapter,Resource[] res, boolean UpOrDown) {
 		position = aVariable;
 		adapter = myArrayAdapter;
 		resources=  res;

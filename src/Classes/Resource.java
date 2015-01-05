@@ -11,9 +11,9 @@ public class Resource implements Parcelable {
 	public int Id;
 	
 	public Resource(Product p){
-		label = p.Name;
+		label = p.name;
 		quantity = 0;
-		Id = p.Id;
+		Id = p.id;
 	}
 	
 	public Resource(Parcel in){

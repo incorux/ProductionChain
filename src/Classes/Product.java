@@ -10,34 +10,47 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Product implements Parcelable{
-	public int Id;
-	public String Name;
+	public int id;
+	public String name;
 	public ArrayList<Resource> materials;
-	public double Value;
-	public Product(String name,double value, Resource[] mats){
-		Id = new Random().nextInt();
+	public double cost;
+	public double value;
+	public int laborCost;
+	public Product(String name,double value, Resource[] mats, ArrayList<Product> products){
+		id = new Random().nextInt();
+		while(Contains(products,id))
+			id = new Random().nextInt();
 		materials = new ArrayList<>(Arrays.asList(mats));
-		Value = value;
-		Name = name;
+		this.value = value;
+		this.name = name;
+		laborCost = 1;
+		cost = 1;
 	}
 	
-	public Product(int id,String name,double value, Resource[] mats){
-		Id = id;
+	public Product(String name, double value,double cost, int laborCost, Resource[] mats, ArrayList<Product> products){
+		id = new Random().nextInt();
+		while(Contains(products,id))
+			id = new Random().nextInt();
 		materials = new ArrayList<>(Arrays.asList(mats));
-		Value = value;
-		Name = name;
+		this.value = value;
+		this.name = name;
+		this.laborCost = laborCost;
+		this.cost = cost;
 	}
 	
 	public Product(Parcel in){
-		Id = in.readInt();
-		Name = in.readString();
-		Value = in.readDouble();
+		id = in.readInt();
+		name = in.readString();
+		value = in.readDouble();
+		cost = in.readDouble();
+		laborCost = in.readInt();
 		materials = new ArrayList<Resource>();
 		in.readList(materials, Resource.class.getClassLoader());
 	}
 	
 	public void AddMaterial(Product p){
-		materials.add(new Resource(p));
+		if(! (id == p.id))
+			materials.add(new Resource(p));
 	}
 	
 	@Override
@@ -47,9 +60,11 @@ public class Product implements Parcelable{
 	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(Id);
-		dest.writeString(Name);
-		dest.writeDouble(Value);
+		dest.writeInt(id);
+		dest.writeString(name);
+		dest.writeDouble(value);
+		dest.writeDouble(cost);
+		dest.writeInt(laborCost);
 		dest.writeList(materials);
 	}
 	
@@ -68,7 +83,11 @@ public class Product implements Parcelable{
 		};
 	
 	public String toString(){
-		return Name;
+		return name;
 	}
-		 
+	private boolean Contains(ArrayList<Product> products, int id){
+		for(Product p : products)
+			if(p.id == id) return true;
+		return false;
+	}
 }

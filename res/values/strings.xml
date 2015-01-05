@@ -4,5 +4,9 @@
     <string name="app_name">ProductionChain</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_addproduct">Add Product</string>
+    <string name="title_activity_productlist">MainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_production_chain">ProductionChainActivity</string>
+    <string name="title_activity_chain_settings">ChainSettingsActivity</string>
 
 </resources>

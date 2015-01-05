@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MyArrayAdapter extends ArrayAdapter<String> {
+public class MaterialsListAdapter extends ArrayAdapter<Resource> {
   private final Context context;
   private final Resource[] values;
 
-  public MyArrayAdapter(Context context, Resource[] products, String[] ar) {
-    super(context, R.layout.rowlayout,R.id.label, ar);
+  public MaterialsListAdapter(Context context, Resource[] products) {
+    super(context, R.layout.rowlayout,R.id.label, products);
     this.context = context;
     this.values = products;
   }
@@ -32,8 +31,8 @@ public class MyArrayAdapter extends ArrayAdapter<String> {
     ImageView upView = (ImageView) rowView.findViewById(R.id.up);
     ImageView downView = (ImageView) rowView.findViewById(R.id.down);
     
-    upView.setOnClickListener(new CustomListener(position,this,values,false));
-    downView.setOnClickListener(new CustomListener(position,this,values,true));
+    upView.setOnClickListener(new EditListener(position,this,values,false));
+    downView.setOnClickListener(new EditListener(position,this,values,true));
     
     textView.setText(values[position].label);
     valueView.setText(Integer.toString(values[position].quantity));
