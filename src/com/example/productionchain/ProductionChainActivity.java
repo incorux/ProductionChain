@@ -4,21 +4,26 @@ import java.util.ArrayList;
 
 import Classes.Batch;
 import Classes.Product;
+import Classes.ProductChainAdapter;
+import Classes.ProductListAdapter;
 import Classes.Resource;
 import Classes.ResourceAggregator;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
-public class ProductionChainActivity extends Activity {
+public class ProductionChainActivity extends ListActivity {
 
 	ArrayList<Product> products;
 	ArrayList<ResourceAggregator> aggregators;
 	ArrayList<Batch> batches;
+	private ProductChainAdapter adapter;
 	int Labor;
 	double Money;
 	
@@ -28,13 +33,16 @@ public class ProductionChainActivity extends Activity {
 		setContentView(R.layout.activity_chain);
 		
 		Intent i = getIntent();
-		if(i!=null){
+		if(i != null){
 			products = i.getParcelableArrayListExtra("Products");
 			Labor = i.getIntExtra("Labor", 0);
 			Money = i.getDoubleExtra("Money", 0);
 			
 			Compute();
 		}
+		
+		ListView lv = getListView();
+		lv.setChoiceMode(0);
 		
 		final Button cancel = (Button) findViewById(R.id.productchain_cancel);
 		cancel.setOnClickListener(new View.OnClickListener() {
@@ -74,11 +82,11 @@ public class ProductionChainActivity extends Activity {
 			Simulate(products.get(index), mintimes , holder, batch, products.get(index).value, holder.Money, holder.Labor);
 			batch.AddToSell(new Resource(products.get(index)), mintimes);
 			productsCosts = simulateProduction(productsCosts,holder.Labor, holder.Money);
-			batch.Efficiency = max;
+			batch.Efficiency = (double) Math.round(max * 100) / 100;;
 			batches.add(batch);
 		}
-		@SuppressWarnings("unused")
-		int i = 0;
+	    adapter = new ProductChainAdapter(this, batches);
+	    setListAdapter(adapter);	
 	}
 
 	private ArrayList<Double> simulateProduction(ArrayList<Double> productsCosts, int labor, double money) {

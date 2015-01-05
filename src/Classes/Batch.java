@@ -6,7 +6,7 @@ public class Batch {
 	public ArrayList<Resource> Create;
 	public ArrayList<Resource> Buy;
 	public ArrayList<Resource> Sell;
-	public double Efficiency;
+	public Double Efficiency;
 	
 	public Batch(){
 		Create = new ArrayList<>();
